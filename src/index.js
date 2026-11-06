@@ -1,12 +1,25 @@
 import express from 'express';
+import { StatusCodes } from 'http-status-codes';
+
+import { connectDB } from './config/dbConfig.js';
 import { PORT } from './config/serverConfig.js';
 
 const app = express();
 
-app.get('/ping' , (req , res) => {
-    return res.status(200).json({message : 'pong'});
+app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+
+app.get('/ping', (req, res) => {
+  return res.status(StatusCodes.OK).json({ message: 'pong' });
 });
 
-app.listen(PORT , () =>{
-    console.log(`Server is running on the port ${PORT}`);
-})
+app.listen(PORT, () => {
+  console.log(`Server is running on the port ${PORT}`);
+  connectDB();
+});
+
+
+// hiranmaymushahary124_db_user
+// IOClXBvS2zBGiIRG
+
+// mongodb+srv://<db_username>:<db_password>@cluster0.pebgpkv.mongodb.net/
