@@ -10,3 +10,14 @@ export const userSignUpSchema = z.object({
         .string({ message: 'Username Required' })
         .min(3, { message: 'String must contain at least 3 character(s)' })
 });
+
+export const userSignInSchema = z.object({
+    email: z
+        .string({ message: 'Email Required' })
+        .email({ message: 'Invalid email' }),
+    password: z
+        .string({ message: 'Password Required' }),
+ 
+});
+
+

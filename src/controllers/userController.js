@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 
-import { signUpService } from "../services/userService.js";
+import { signInService, signUpService } from "../services/userService.js";
 import { customErrorResponse,
      internalErrorResponse, 
      succesResponse } from "../utils/common/responseObject.js";
@@ -29,3 +29,29 @@ export const signUp = async(req , res) => {
         .json(internalErrorResponse(error));
     }
 };
+
+
+export const signIn = async(req , res) => {
+
+    try {
+        const response = await signInService(req.body);
+        return res
+        .status(StatusCodes.OK)
+        .json(succesResponse(response , 'User signin succesfully'));
+
+    } catch (error) {
+        console.log('User controller error' , error);
+        
+        if (error.statusCode) {
+            return res.status(error.statusCode).json(customErrorResponse(error));
+        }
+
+        if (error.name === 'ValidationError') {
+            return res.status(StatusCodes.BAD_REQUEST).json(customErrorResponse(error));
+        }
+
+        return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json(internalErrorResponse(error));
+    }
+}

@@ -8,7 +8,7 @@ export const validate = (schema) => {
             await schema.parseAsync(req.body);
             next();
         } catch (error) {
-            console.log('Validation error in zod validator', error);
+            // console.log('Validation error in zod validator', error);
             let explanation = [];
 
             const issueList = error.issues || error.errors;
