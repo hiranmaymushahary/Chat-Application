@@ -16,9 +16,9 @@ app.get('/ping', (req, res) => {
   return res.status(StatusCodes.OK).json({ message: 'pong' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on the port ${PORT}`);
-  connectDB();
+  await connectDB();
 });
 
 

@@ -2,8 +2,9 @@ import { StatusCodes } from "http-status-codes";
 import jwt from 'jsonwebtoken';
 
 import { JWT_SECRET } from "../config/serverConfig.js";
-import userRepository from "../repositories/userRepository";
-import { customErrorResponse, internalErrorResponse } from "../utils/common/responseObject.js";
+import userRepository from "../repositories/userRepository.js";
+import { customErrorResponse, 
+    internalErrorResponse } from "../utils/common/responseObject.js";
 
 export const isAuthenticated = async (req, res, next) => {
     try {
@@ -31,7 +32,15 @@ export const isAuthenticated = async (req, res, next) => {
         }
 
         // Attach verified user payload to request and proceed
-        const user = await userRepository.getById(response.id)
+        const user = await userRepository.getById(response.id);
+        if (!user) {
+            return res.status(StatusCodes.NOT_FOUND).json(
+                customErrorResponse({
+                    explanation: 'Invalid user token',
+                    message: 'User does not exist'
+                })
+            );
+        }
         req.user = user.id;
         next();
         

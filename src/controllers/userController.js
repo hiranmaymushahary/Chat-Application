@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { signInService, signUpService } from "../services/userService.js";
 import { customErrorResponse,
      internalErrorResponse, 
-     succesResponse } from "../utils/common/responseObject.js";
+     successResponse } from "../utils/common/responseObject.js";
 
 
 export const signUp = async(req , res) => {
@@ -12,7 +12,7 @@ export const signUp = async(req , res) => {
 
         return res
         .status(StatusCodes.CREATED)
-        .json(succesResponse(user , 'User created succesfully'));
+        .json(successResponse(user , 'User created succesfully'));
     } catch (error) {
         console.log('User controller error' , error);
         
@@ -37,7 +37,7 @@ export const signIn = async(req , res) => {
         const response = await signInService(req.body);
         return res
         .status(StatusCodes.OK)
-        .json(succesResponse(response , 'User signin succesfully'));
+        .json(successResponse(response , 'User signin succesfully'));
 
     } catch (error) {
         console.log('User controller error' , error);
